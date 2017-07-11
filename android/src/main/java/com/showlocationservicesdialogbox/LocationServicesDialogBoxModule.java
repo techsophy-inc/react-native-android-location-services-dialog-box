@@ -34,7 +34,7 @@ class LocationServicesDialogBoxModule extends ReactContextBaseJavaModule impleme
         promiseCallback = promise;
         map = configMap;
         currentActivity = getCurrentActivity();
-        checkLocationService(false);
+        checkLocationService(configMap.getBoolean("hideDialog"));
     }
 
     private void checkLocationService(Boolean activityResult) {
