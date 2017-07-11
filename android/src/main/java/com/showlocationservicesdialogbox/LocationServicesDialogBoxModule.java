@@ -45,7 +45,7 @@ class LocationServicesDialogBoxModule extends ReactContextBaseJavaModule impleme
         Boolean isCoarseLocationEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
         Boolean isEnabled = isHighAccuraryEnabled || isCoarseLocationEnabled;
 
-        if (!map.hasKey("enableHighAccuracy") || map.getBoolean("enableHighAccuracy")) {
+        if (map.getBoolean("enableHighAccuracy")) {
             isEnabled = isHighAccuraryEnabled && isCoarseLocationEnabled;
         }
         if (!isEnabled) {
@@ -55,7 +55,11 @@ class LocationServicesDialogBoxModule extends ReactContextBaseJavaModule impleme
                 displayPromptForEnablingGPS(currentActivity, map, promiseCallback);
             }
         } else {
-            promiseCallback.resolve("enabled");
+          String permissions= JSON.stringify({
+            isHighAccuraryEnabled: isHighAccuraryEnabled,
+            isCoarseLocationEnabled: isCoarseLocationEnabled,
+          });
+            promiseCallback.resolve(permissions);
         }
     }
 
