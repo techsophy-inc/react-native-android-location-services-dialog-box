@@ -41,9 +41,12 @@ class LocationServicesDialogBoxModule extends ReactContextBaseJavaModule impleme
         if (currentActivity == null || map == null || promiseCallback == null) return;
         LocationManager locationManager = (LocationManager) currentActivity.getSystemService(Context.LOCATION_SERVICE);
 
-        Boolean isEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        Boolean isHighAccuraryEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        Boolean isCoarseLocationEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+        Boolean isEnabled = isHighAccuraryEnabled || isCoarseLocationEnabled;
+
         if (!map.hasKey("enableHighAccuracy") || map.getBoolean("enableHighAccuracy")) {
-            isEnabled = isEnabled && locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+            isEnabled = isHighAccuraryEnabled && isCoarseLocationEnabled;
         }
         if (!isEnabled) {
             if (activityResult) {
