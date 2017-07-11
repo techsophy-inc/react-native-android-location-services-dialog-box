@@ -42,7 +42,7 @@ On top, where imports are:
 import com.showlocationservicesdialogbox.LocationServicesDialogBoxPackage;
 ```
 
-Under `protected List<ReactPackage> getPackages() {`:  
+Under `protected List<ReactPackage> getPackages() {`:
 ```java
   return Arrays.<ReactPackage>asList(
     new MainReactPackage(),
@@ -76,7 +76,7 @@ export default class LocationServiceTestPage extends Component {
         super(props);
         this.checkIsLocation();
     }
-    
+
     async checkIsLocation():Boolean {
         let check = await LocationServicesDialogBox.checkLocationServicesIsEnabled({
             message: "Use Location ?",
@@ -85,7 +85,7 @@ export default class LocationServiceTestPage extends Component {
         }).catch(error => error);
 
         return Object.is(check, "enabled");
-    } 
+    }
 }
 ```
 
@@ -136,11 +136,13 @@ AppRegistry.registerComponent('SampleApp', () => SampleApp);
 
 ### Props
 
-| Prop             | Type        | Description                    |
-|------------------|-------------|--------------------------------|
-|`message`         |`HTML`       |Dialog box content text         |
-|`ok`              |`String`     |Dialog box ok button text       |
-|`cancel`          |`String`     |Dialog box cancel button text   |
+| Prop                | Type         | Description                                                          |
+|---------------------|--------------|----------------------------------------------------------------------|
+|`message`            |`HTML`        |Dialog box content text                                               |
+|`ok`                 |`String`      |Dialog box ok button text                                             |
+|`cancel`             |`String`      |Dialog box cancel button text                                         |
+|`enableHighAccuracy` |`Boolean`     |Will check if High Accuracy Location permissions is enabled if true   |
+|`hideDialog`         |`Boolean`     |Returns result without dialog if True, default False                  |
 
 ### Methods
 
