@@ -41,9 +41,12 @@ class LocationServicesDialogBoxModule extends ReactContextBaseJavaModule impleme
         if (currentActivity == null || map == null || promiseCallback == null) return;
         LocationManager locationManager = (LocationManager) currentActivity.getSystemService(Context.LOCATION_SERVICE);
 
-        Boolean isEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-        if (!map.hasKey("enableHighAccuracy") || map.getBoolean("enableHighAccuracy")) {
-            isEnabled = isEnabled && locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+        Boolean isHighAccuraryEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        Boolean isCoarseLocationEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+        Boolean isEnabled = isHighAccuraryEnabled || isCoarseLocationEnabled;
+
+        if (map.getBoolean("enableHighAccuracy")) {
+            isEnabled = isHighAccuraryEnabled && isCoarseLocationEnabled;
         }
         if (!isEnabled) {
             if (activityResult) {
@@ -52,7 +55,10 @@ class LocationServicesDialogBoxModule extends ReactContextBaseJavaModule impleme
                 displayPromptForEnablingGPS(currentActivity, map, promiseCallback);
             }
         } else {
-            promiseCallback.resolve("enabled");
+          WritableMap result = new WritableNativeMap();
+          result.putBoolean("isGPSEnabled", isHighAccuraryEnabled);
+          result.putBoolean("isNetworkEnabled", isCoarseLocationEnabled);
+          promiseCallback.resolve(result);
         }
     }
 
