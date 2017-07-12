@@ -55,7 +55,7 @@ class LocationServicesDialogBoxModule extends ReactContextBaseJavaModule impleme
                 displayPromptForEnablingGPS(currentActivity, map, promiseCallback);
             }
         } else {
-            promiseCallback.resolve({"isHighAccuraryEnabled": isHighAccuraryEnabled, "isCoarseLocationEnabled": isCoarseLocationEnabled});
+            promiseCallback.resolve({isHighAccuraryEnabled: isHighAccuraryEnabled, isCoarseLocationEnabled: isCoarseLocationEnabled});
         }
     }
 
